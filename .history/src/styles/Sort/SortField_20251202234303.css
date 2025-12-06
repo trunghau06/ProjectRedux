@@ -1,0 +1,39 @@
+.sort-dropdown-header {
+    position: relative; /* quan trọng */
+    padding-right: 15px !important;
+    cursor: pointer;
+    overflow: visible;  /* cho phép dropdown “thoát” */
+}
+
+.header-wrapper {
+    position: relative; /* container dropdown */
+}
+
+.sort-menu-dropdown {
+    position: absolute;
+    top: 100%;      /* ngay dưới chữ và mũi tên */
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+    z-index: 1000;
+}
+
+.sort-menu-dropdown div {
+    padding: 5px 10px;
+    cursor: pointer;
+    white-space: normal;  /* quan trọng để 2 dòng chữ hiển thị */
+}
+
+.sort-menu-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+
+.sort-menu-dropdown div.selected {
+    font-weight: bold;
+    color: #007bff;
+}

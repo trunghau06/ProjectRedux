@@ -1,0 +1,2 @@
+[plugin:vite:import-analysis] Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+E:/React/bt-react-redux/src/features/users/usersSlice.js:30:21

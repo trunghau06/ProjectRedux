@@ -1,0 +1,25 @@
+// src/App.jsx
+import './App.css';
+import Header from './components/Header/Header.jsx';
+import BtnAddRecord from './components/ActionButtons/BtnAddRecord.jsx';
+import ModalAction from './components/Modal/ModalAction.jsx';
+import DataView from './components/DataView/DataView.jsx';
+import PaginationWrapper from './components/Shared/PaginationWrapper.jsx';
+
+function App() {
+  return (
+    <>
+      <div className="container">
+        <Header />
+        <DataView />     
+        <BtnAddRecord />
+        <ModalAction />
+      </div>
+      
+      {/* Pagination nằm ngoài container như BtnAddRecord */}
+      <PaginationWrapper />
+    </>
+  );
+}
+
+export default App;

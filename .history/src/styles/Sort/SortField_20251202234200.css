@@ -1,0 +1,55 @@
+.sort-dropdown-header {
+    position: relative;      /* quan trọng để dropdown position: absolute đúng */
+    cursor: pointer;
+    padding-right: 15px !important;
+    overflow: visible;       /* quan trọng, không bị cắt */
+}
+
+/* Dropdown hiển thị 2 dòng chữ dọc */
+.sort-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;  /* 2 dòng chữ xếp dọc */
+    z-index: 100;            /* hiện trên header */
+    min-width: 120px;
+}
+
+/* 2 dòng chữ */
+.sort-menu-dropdown div {
+    padding: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sort-menu-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+
+.sort-menu-dropdown div.selected {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Mũi tên */
+.sort-menu-icon {
+    margin-left: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer; 
+    color: #fff;
+    padding: 2px;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.sort-menu-icon:hover {
+    color: #f0f0f0; 
+}

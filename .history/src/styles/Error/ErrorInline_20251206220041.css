@@ -1,0 +1,62 @@
+/* src/styles/Error/ErrorInline.css */
+.error-inline {
+  text-align: center;
+  padding: 20px;
+  margin: 10px;
+  background: #fff2f0;
+  border-radius: 8px;
+  border: 1px solid #ffccc7;
+  animation: slideDown 0.3s ease-out;
+}
+
+.error-inline-message {
+  color: #cf1322;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .error-inline {
+    padding: 15px;
+    margin: 8px;
+  }
+
+  .error-inline-message {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+}
+```
+
+---
+
+## **📁 Cấu trúc thư mục:**
+```
+src/
+├── components/
+│   ├── Shared/
+│   │   └── RetryButton.jsx     ← Component button retry
+│   └── Error/
+│       ├── ErrorDisplay.jsx
+│       └── ErrorInline.jsx
+└── styles/
+    ├── Shared/
+    │   └── RetryButton.css
+    └── Error/
+        ├── ErrorDisplay.css
+        └── ErrorInline.css

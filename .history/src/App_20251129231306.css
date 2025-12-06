@@ -1,0 +1,292 @@
+:root {
+    --p: #6a5acd;
+    --s: #48d1cc;
+    --bg-original-start: #667eea;
+    --bg-original-end: #764ba2;
+    --table-bg: #FFFFFF;
+    --card-bg: #F7F8FC;
+    --text-primary: #1C2331;
+    --text-secondary: #5C697F;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f6ffed;
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    width: 100%;
+    padding: 20px;
+}
+
+.cards-container {
+    position: relative; 
+    height: 68vh; 
+    overflow-y: auto; 
+    overflow-x: auto;
+    backdrop-filter: blur(5px); 
+    display: none; 
+    margin: 20px auto; 
+    width: 92%; 
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    border: 1px solid #f6ffed;
+}
+
+.cards-container::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.cards-spacer {
+    position: relative;
+    min-height: 100%;
+}
+
+.cards-content {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    min-width: 100%;
+    transition: padding-top 0.1s linear;
+    padding: 0;
+}
+
+#cardView {
+    display: none;
+}
+
+#tableView {
+    display: block;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--p);
+    flex-shrink: 0;
+}
+
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--s);
+}
+
+.card-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-male {
+    background: #bbdefb;
+    color: #1e88e5;
+}
+
+.badge-female {
+    background: #f8bbd0;
+    color: #d81b60;
+}
+
+.loading-more {
+    text-align: center;
+    color: var(--text-primary);
+    background: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.loading-more .spinner {
+    width: 45px;
+    height: 45px;
+    border-width: 5px;
+    border-top-color: var(--p);
+    margin: 0 auto 10px;
+}
+
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin: 0 2px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.btn-action.edit-icon {
+    background-color: #f5e174;
+    color: #FFFFFF;
+}
+
+.btn-action.delete-icon {
+    background-color: #ed7272;
+    color: #FFFFFF;
+}
+
+.btn-action i {
+    pointer-events: none;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px; 
+    margin-top: 12px; 
+}
+
+@media (max-width: 768px) {
+     #loadingMore {
+        display: none !important;
+    }
+
+    #tableView {
+        display: none !important;
+    }
+
+    #cardView {
+        display: flex !important;
+    }
+
+    body {
+        min-width: auto;
+        overflow-x: hidden;
+    }
+
+    .container {
+        position: relative; 
+        left: auto;
+        transform: none;
+        margin: 0 auto;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .cards-container {
+        height: 90vh;
+        width: 100%;
+        max-width: 100%;    
+        margin: 0 auto;      
+        padding: 0;    
+        display: flex;   
+        flex-direction: column;
+        align-items: center; 
+        overflow-x: hidden !important;
+    }
+
+    .card-list-grid {
+        width: 100%;
+        max-width: 500px;  
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cards-content {
+        padding: 0 10px;
+        display: flex;
+        justify-content: center;
+        left: 0 !important;
+        right: 0 !important;
+        min-width: auto !important;
+        width: 100% !important;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+
+    .card-body {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 12px;
+        width: 88%;
+    }
+
+    .card-header {
+        flex-wrap: nowrap;
+        padding: 24px 8px;
+        margin-bottom: 8px;
+    }
+
+    .card-badge {
+        order: auto;
+        margin-top: 0;
+        align-self: center;
+    }
+
+    .card-info {
+        flex-basis: auto;
+        min-width: 80px;
+    }
+
+     .modal-content {
+        width: 90%;         
+        max-width: 500px;  
+        max-height: 90vh;
+        margin: 0 auto;     
+        padding: 20px;       
+        border-radius: 12px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-header h2 {
+        font-size: 20px;
+    }
+
+    .add-record-btn {
+        top: 64%;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .pagination-next-btn, .pagination-prev-btn {
+        display: none;
+    }
+
+    .btn-action {
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,63 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { loadUsers }   from './userThunks.js';
+
+const usersSlice = createSlice({
+    name: "users",
+
+    initialState: {         // trạng thái ban đầu   
+        data      : [],     // nơi lưu danh sách 
+        loading   : false,  // trạng thái đang tải
+        error     : null,   // lỗi nếu có
+        page      : 1,      // trang hiện tại
+        limit     : 10,     // số lượng item mỗi trang
+        sortBy    : "id",   // trường sắp xếp
+        order     : "asc",  // thứ tự sắp xếp
+        hasMore   : true    // còn dữ liệu để tải không
+    },
+
+    reducers: {
+        resetUsers: (state) => { 
+            state.data = []; 
+            state.page = 1;
+            state.hasMore = true;
+        }
+    },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(loadUsers.pending, (state) => {
+                state.loading = true;
+                state.error   = null; 
+            })
+
+            .addCase(loadUsers.fulfilled, (state, action) => {
+                state.loading = false;
+
+                if (action.payload.length === 0) {
+                    state.hasMore = false;
+                    return;
+                }
+
+                const existingIds = new Set(state.data.map(user => user.id));
+                const newUsers = action.payload.filter(user => !existingIds.has(user.id));
+
+                state.page += 1;
+
+                if (newUsers.length > 0) {
+                    state.data.push(...newUsers);
+                }
+
+                if (action.payload.length < state.limit) {
+                    state.hasMore = false;
+                }
+            })
+
+            .addCase(loadUsers.rejected, (state, action) => {
+                state.loading = false;
+                state.error   = action.error.message;
+            });
+    }
+});
+
+export const { resetUsers } = usersSlice.actions;
+export default usersSlice.reducer;

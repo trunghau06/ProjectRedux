@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from "react";
+import "../../styles/Shared/Pagination.css";
+
+export default function Pagination({ 
+  currentPage, 
+  totalItems, 
+  itemsPerPage, 
+  hasMore, 
+  loading,
+  onPageChange 
+}) {
+  const [isTableVisible, setIsTableVisible] = useState(true);
+
+  // Theo dõi xem Table View có đang hiển thị không
+  useEffect(() => {
+    const checkVisibility = () => {
+      const tableView = document.querySelector('#tableView');
+      const cardView = document.querySelector('#cardView');
+      
+      if (tableView && cardView) {
+        // Check nhiều điều kiện
+        const tableStyle = window.getComputedStyle(tableView);
+        const cardStyle = window.getComputedStyle(cardView);
+        
+        const isTableShown = 
+          tableStyle.display !== 'none' && 
+          tableStyle.visibility !== 'hidden' &&
+          tableStyle.opacity !== '0';
+          
+        const isCardShown = 
+          cardStyle.display !== 'none' && 
+          cardStyle.visibility !== 'hidden' &&
+          cardStyle.opacity !== '0';
+        
+        // Table visible nếu nó hiển thị và card không hiển thị
+        setIsTableVisible(isTableShown && !isCardShown);
+      }
+    };
+
+    // Check ngay lập tức
+    checkVisibility();
+
+    // Set up MutationObserver để theo dõi thay đổi
+    const observer = new MutationObserver(checkVisibility);
+    const tableView = document.querySelector('#tableView');
+    const cardView = document.querySelector('#cardView');
+
+    if (tableView) {
+      observer.observe(tableView, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
+    if (cardView) {
+      observer.observe(cardView, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      });
+    }
+
+    // Check lại sau một chút để chắc chắn
+    const timer = setTimeout(checkVisibility, 100);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Tính toán
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+  const startRecord = (currentPage - 1) * itemsPerPage + 1;
+  const endRecord = Math.min(currentPage * itemsPerPage, totalItems);
+
+  // Handlers
+  const handlePrev = () => {
+    if (currentPage > 1 && !loading) {
+      onPageChange(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (!loading && (currentPage < totalPages || hasMore)) {
+      onPageChange(currentPage + 1);
+    }
+  };
+
+  // Không hiển thị nếu không có data hoặc không phải Table View
+  if (!isTableVisible || totalItems === 0) return null;
+
+  return (
+    <div className="pagination-container">
+      <button 
+        className="pagination-btn"
+        onClick={handlePrev}
+        disabled={currentPage <= 1 || loading}
+        title={`Xem trang ${currentPage - 1}`}
+      >
+        ← Prev
+      </button>
+      
+      <div className="pagination-info">
+        <div style={{ fontWeight: 'bold', fontSize: '15px' }}>
+          Trang {currentPage} / {totalPages}
+        </div>
+        <div style={{ fontSize: '12px', color: '#389e0d', marginTop: '3px' }}>
+          Hiển thị {startRecord}-{endRecord} / {totalItems}
+        </div>
+        {hasMore && currentPage === totalPages && (
+          <div style={{ fontSize: '11px', color: '#389e0d', marginTop: '2px' }}>
+            ⟳ Có thể tải thêm
+          </div>
+        )}
+      </div>
+      
+      <button 
+        className="pagination-btn"
+        onClick={handleNext}
+        disabled={loading || (!hasMore && currentPage >= totalPages)}
+        title={`Xem trang ${currentPage + 1}`}
+      >
+        Next →
+      </button>
+    </div>
+  );
+}

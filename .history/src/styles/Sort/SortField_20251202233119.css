@@ -1,0 +1,67 @@
+.sort-dropdown-header {
+    position: relative; 
+    cursor: default;
+    padding-right: 15px !important;
+}
+
+/* Container bao quanh chữ và icon */
+.header-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sort-menu-icon {
+    margin-left: 5px;
+    font-size: 1.1em; 
+    font-weight: bold;
+    cursor: pointer; 
+    color: #fff;
+    padding: 2px;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.sort-menu-icon:hover {
+    color: #f0f0f0; 
+}
+
+.sort-menu-dropdown {
+    position: absolute;
+    z-index: 1000; 
+    top: 100%; 
+    left: 0;
+    
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    padding: 5px;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.sort-menu-dropdown button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    color: #aa2121;
+}
+
+.sort-menu-dropdown button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Nút được chọn */
+.sort-menu-dropdown button.selected {
+    background-color: #e9ecef; 
+    font-weight: bold;
+    color: #007bff;
+}

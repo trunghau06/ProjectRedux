@@ -1,0 +1,23 @@
+.card-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px; 
+    margin-top: 12px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin: 0 2px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.btn-action i {
+    pointer-events: none;
+}

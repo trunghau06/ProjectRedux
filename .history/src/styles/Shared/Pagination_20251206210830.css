@@ -1,0 +1,91 @@
+/* Desktop - Full pagination */
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+    background: #d3ffd8;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+}
+
+.pagination-desktop {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.pagination-btn {
+    padding: 12px 20px;
+    background: #389e0d;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    min-width: 90px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #52c41a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(56, 158, 13, 0.3);
+}
+
+.pagination-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    min-width: 180px;
+    text-align: center;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pagination-btn:disabled {
+    background: #b0b0b0; 
+    cursor: not-allowed; 
+    color: #f0f0f0;
+    transform: none;
+}
+
+/* Mobile - Chỉ hiện nút Prev/Next cố định dưới */
+@media (max-width: 768px) {
+    .pagination-mobile {
+        position: fixed !important;
+        top: 62%;
+        left: 10px !important;
+        right: 110px !important;
+        transform: none !important;
+        background: white !important;
+        border-radius: 25px !important;
+        padding: 10px 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+        border: 2px solid #52c41a !important;
+        gap: 10px !important;
+        justify-content: space-between !important;
+        z-index: 99999 !important;
+    }
+
+    /* Ẩn phần info ở mobile */
+    .pagination-mobile .pagination-info {
+        display: none !important;
+    }
+
+    .pagination-mobile .pagination-btn {
+        flex: 1;
+        max-width: 48%;
+        padding: 12px 14px;
+        font-size: 13px;
+        font-weight: bold;
+        border-radius: 20px;
+    }
+}

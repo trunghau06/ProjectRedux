@@ -1,0 +1,261 @@
+import React from "react";
+import "../../styles/Shared/Pagination.css";
+
+export default function Pagination({
+  currentPage,
+  totalItems,      // = data.length hiện tại
+  itemsPerPage,
+  hasMore,
+  loading,
+  onPageChange
+}) {
+  const startRecord =
+    totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+  const endRecord = Math.min(currentPage * itemsPerPage, totalItems);
+
+  const handlePrev = () => {
+    if (currentPage > 1 && !loading) onPageChange(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (!loading && (hasMore || endRecord < totalItems)) {
+      onPageChange(currentPage + 1);
+    }
+  };
+
+  if (totalItems === 0) return null;
+
+  return (
+    <div className="pagination-container">
+      <button
+        className="pagination-btn"
+        onClick={handlePrev}
+        disabled={currentPage <= 1 || loading}
+      >
+        ← Prev
+      </button>
+
+      <div className="pagination-info">
+        <div style={{ fontWeight: "bold", fontSize: "15px" }}>
+          Trang {currentPage}
+        </div>
+
+        <div style={{ fontSize: "12px", color: "#389e0d", marginTop: "3px" }}>
+          {startRecord}-{endRecord} / {totalItems}
+        </div>
+      </div>
+
+      <button
+        className="pagination-btn"
+        onClick={handleNext}
+        disabled={loading || (!hasMore && endRecord >= totalItems)}
+      >
+        Next →
+      </button>
+    </div>
+  );
+}
+import React, { useEffect, useRef, useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUsers } from "../../features/users/userThunks";
+import DataTable from "./DataTable";
+import DataCard from "./DataCard";
+import LoaderSpinner from "../Loader/LoaderSpinner";
+import Pagination from "../Shared/Pagination";
+import "../../styles/Shared/Pagination.css";
+
+export default function DataView() {
+  const dispatch = useDispatch();
+  const { data, loading, page, hasMore, limit, sortBy, order } = useSelector(
+    (state) => state.users
+  );
+
+  const containerRef = useRef(null);
+  const isLoadingRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  const [paginationPage, setPaginationPage] = useState(1);
+
+  // Khóa auto detect khi dùng prev/next
+  const [lockAutoPage, setLockAutoPage] = useState(false);
+
+  /** ---------------------------------------------------
+   * 1) LOAD TRANG 1 NGAY LẦN ĐẦU
+   ---------------------------------------------------- */
+  useEffect(() => {
+    if (data.length === 0) {
+      dispatch(loadUsers({ page: 1, limit, sortBy, order }));
+    }
+  }, [dispatch, limit, sortBy, order]);
+
+  /** ---------------------------------------------------
+   * 2) CHECK WIDTH → MOBILE MODE
+   ---------------------------------------------------- */
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  /** ---------------------------------------------------
+   * 3) SCROLL LOAD THÊM
+   ---------------------------------------------------- */
+  const handleScroll = useCallback(() => {
+    const container = containerRef.current;
+    if (!container || loading || !hasMore || isLoadingRef.current) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+
+    if (scrollHeight - scrollTop - clientHeight <= 100) {
+      isLoadingRef.current = true;
+      dispatch(loadUsers({ page, limit, sortBy, order })).finally(() => {
+        isLoadingRef.current = false;
+      });
+    }
+  }, [dispatch, page, limit, sortBy, order, loading, hasMore]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  /** ---------------------------------------------------
+   * 4) CLICK PREV / NEXT
+   ---------------------------------------------------- */
+  const handlePaginationChange = async (newPage) => {
+    setLockAutoPage(true);
+    setTimeout(() => setLockAutoPage(false), 400);
+
+    const requiredLength = newPage * limit;
+
+    // Load đủ data cho trang cần sang
+    if (data.length < requiredLength && hasMore) {
+      const pagesLoaded = Math.ceil(data.length / limit);
+      const pagesToLoad = newPage - pagesLoaded;
+
+      for (let i = 0; i < pagesToLoad; i++) {
+        await dispatch(loadUsers({ page: page + i, limit, sortBy, order }));
+      }
+    }
+
+    setPaginationPage(newPage);
+    scrollToPage(newPage);
+  };
+
+  const scrollToPage = (pageNumber) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const table = container.querySelector("#tableView");
+    if (!table || table.style.display === "none") return;
+
+    const rows = table.querySelectorAll("tbody tr");
+    const targetIndex = (pageNumber - 1) * limit;
+
+    if (rows[targetIndex]) {
+      const offsetTop = rows[targetIndex].offsetTop;
+      container.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  /** ---------------------------------------------------
+   * 5) AUTO DETECT PAGE KHI SCROLL
+   ---------------------------------------------------- */
+  useEffect(() => {
+    if (lockAutoPage) return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rows = container.querySelectorAll("#tableView tbody tr");
+    if (rows.length === 0) return;
+
+    const updateCurrentPage = () => {
+      const containerTop = container.getBoundingClientRect().top;
+
+      for (let i = 0; i < rows.length; i++) {
+        const rowTop = rows[i].getBoundingClientRect().top;
+
+        if (rowTop >= containerTop - 50) {
+          const newPage = Math.floor(i / limit) + 1;
+          if (newPage !== paginationPage) {
+            setPaginationPage(newPage);
+          }
+          break;
+        }
+      }
+    };
+
+    let f1 = requestAnimationFrame(() => {
+      let f2 = requestAnimationFrame(() => updateCurrentPage());
+      return () => cancelAnimationFrame(f2);
+    });
+
+    return () => cancelAnimationFrame(f1);
+  }, [data.length, limit, lockAutoPage]);
+
+  /** ---------------------------------------------------
+   * 6) LOADER LẦN ĐẦU
+   ---------------------------------------------------- */
+  if (loading && data.length === 0) return <LoaderSpinner />;
+
+  /** ---------------------------------------------------
+   * 7) CHECK: Pagination chỉ hiện khi TABLE đang bật
+   ---------------------------------------------------- */
+  const showPagination =
+    typeof document !== "undefined" &&
+    document.querySelector("#tableView")?.style.display !== "none";
+
+  /** ---------------------------------------------------
+   * 8) RENDER VIEW
+   ---------------------------------------------------- */
+  return (
+    <>
+      <div
+        id="cardsContainer"
+        className="cards-container"
+        ref={containerRef}
+        style={{ display: data.length ? "block" : "none" }}
+      >
+        <div className="cards-spacer">
+          <div className="cards-content">
+            <div id="tableView" className="view-wrapper">
+              <DataTable />
+            </div>
+
+            <div id="cardView" className="view-wrapper card-list-grid">
+              <DataCard />
+            </div>
+
+            {loading && data.length > 0 && (
+              <div id="loadingMore" className="loading-more">
+                <div>...</div>
+              </div>
+            )}
+
+            {!hasMore && data.length > 0 && !isMobile && (
+              <div style={{ textAlign: "center", padding: "20px", color: "#666" }}>
+                Đã tải hết dữ liệu
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {showPagination && (
+        <Pagination
+          currentPage={paginationPage}
+          totalItems={data.length}
+          itemsPerPage={limit}
+          loading={loading}
+          onPageChange={handlePaginationChange}
+        />
+      )}
+    </>
+  );
+}

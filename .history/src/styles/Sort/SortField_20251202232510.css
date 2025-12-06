@@ -1,0 +1,48 @@
+/*
+ * CSS cho SortField.jsx (Cơ chế <select> vô hình)
+ */
+
+/* 1. Header Column Container (Thẻ <th>) */
+.sort-select-header {
+    /* Quan trọng: Cho phép đặt select tuyệt đối bên trong */
+    position: relative; 
+    cursor: default;
+    padding-right: 15px !important;
+}
+
+/* Container chứa label và icon (Giao diện trực quan) */
+.header-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Có thể cần z-index thấp hơn select */
+    position: relative; 
+    z-index: 5; 
+}
+
+/* Icon (chỉ là hình ảnh hiển thị) */
+.sort-menu-icon {
+    /* ... (giữ nguyên kiểu dáng cũ) ... */
+    color: #fff;
+    font-size: 1.1em;
+    cursor: default; /* Không click trực tiếp vào icon này nữa */
+}
+
+/* 2. Thẻ <select> VÔ HÌNH (Lớp kích hoạt) */
+.sort-native-select {
+    /* Đặt vị trí tuyệt đối để che phủ toàn bộ <th> */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Làm cho nó vô hình */
+    opacity: 0; 
+    
+    /* Cần z-index cao hơn giao diện trực quan */
+    z-index: 10; 
+    
+    /* Quan trọng: Cho phép click */
+    cursor: pointer;
+}

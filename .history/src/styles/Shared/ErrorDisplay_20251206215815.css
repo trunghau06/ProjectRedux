@@ -1,0 +1,69 @@
+/* src/styles/Error/ErrorDisplay.css */
+.error-container {
+  text-align: center;
+  padding: 40px 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  background: #fff2f0;
+  border-radius: 12px;
+  border: 1px solid #ffccc7;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: shake 0.5s ease-in-out;
+}
+
+.error-title {
+  color: #cf1322;
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #8c8c8c;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .error-container {
+    margin: 10px;
+    padding: 30px 15px;
+  }
+
+  .error-icon {
+    font-size: 36px;
+  }
+
+  .error-title {
+    font-size: 18px;
+  }
+
+  .error-message {
+    font-size: 13px;
+  }
+}

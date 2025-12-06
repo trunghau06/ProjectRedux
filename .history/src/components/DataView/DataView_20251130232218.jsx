@@ -1,0 +1,31 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUsers } from "../../features/users/usersThunks";
+import DataTable from "./DataTable";
+import DataCard from "./DataCard";
+import LoadingSpinner from "../Loader/LoaderSpinner";
+
+export default function DataView() {
+  const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.users);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Lấy dữ liệu lần đầu
+  useEffect(() => {
+    dispatch(loadUsers({ page: 1, limit: 10 }));
+  }, [dispatch]);
+
+  // Lắng nghe resize để chuyển Table/Card
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <div className="data-view-container">
+      {loading && <LoadingSpinner />}
+      {!loading && (isMobile ? <DataCard /> : <DataTable />)}
+    </div>
+  );
+}

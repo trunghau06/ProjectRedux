@@ -1,0 +1,26 @@
+:root {
+    --p: #6a5acd;
+    --s: #48d1cc;
+    --bg-original-start: #667eea;
+    --bg-original-end: #764ba2;
+    --table-bg: #FFFFFF;
+    --card-bg: #F7F8FC;
+    --text-primary: #1C2331;
+    --text-secondary: #5C697F;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f6ffed;
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}

@@ -1,0 +1,16 @@
+
+.loading-more {
+    text-align: center;
+    color: var(--text-primary);
+    background: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.loading-more .spinner {
+    width: 45px;
+    height: 45px;
+    border-width: 5px;
+    border-top-color: var(--p);
+    margin: 0 auto 10px;
+}

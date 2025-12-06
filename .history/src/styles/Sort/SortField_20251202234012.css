@@ -1,0 +1,38 @@
+.sort-dropdown-header {
+    position: relative; /* quan trọng để dropdown position: absolute đúng */
+    cursor: pointer;
+    padding-right: 15px !important;
+    overflow: visible;  /* mặc định thẻ table thường hidden */
+}
+
+/* Dropdown hiển thị 2 dòng chữ dọc */
+.sort-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100; /* đảm bảo hiện trên header */
+}
+
+/* 2 dòng chữ bên trong */
+.sort-menu-dropdown div {
+    padding: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sort-menu-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+
+.sort-menu-dropdown div.selected {
+    font-weight: bold;
+    color: #007bff;
+}

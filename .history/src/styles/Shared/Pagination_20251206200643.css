@@ -1,0 +1,76 @@
+/* Pagination.css */
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: white;
+  border-top: 1px solid #e8e8e8;
+  gap: 15px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  border: 1px solid #d9d9d9;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  min-width: 80px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: #52c41a;
+  color: #52c41a;
+}
+
+.pagination-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background: #f5f5f5;
+}
+
+.pagination-info {
+  text-align: center;
+  flex: 1;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .pagination-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    z-index: 100;
+    border-top: 2px solid #52c41a;
+  }
+
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    min-width: 70px;
+  }
+
+  .pagination-info {
+    font-size: 14px;
+  }
+
+  .pagination-info > div:first-child {
+    font-size: 16px !important;
+  }
+
+  .pagination-info > div:last-child {
+    font-size: 12px !important;
+  }
+
+  /* Thêm padding bottom cho container để tránh pagination che content */
+  .cards-container {
+    padding-bottom: 80px !important;
+  }
+}

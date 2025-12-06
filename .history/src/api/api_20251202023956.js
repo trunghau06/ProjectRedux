@@ -1,0 +1,33 @@
+export const API_URL = "https://671891927fc4c5ff8f49fcac.mockapi.io/v2/users"; // lưu ý thêm `/users`
+
+export async function fetchData(page = 1, limit = 10, sortBy = "id", order = "asc") {
+    const response = await fetch(`${API_URL}?page=${page}&limit=${limit}&sortBy=${sortBy}&order=${order}`);
+    if (!response.ok) throw new Error(`Error fetching data: ${response.statusText}`);
+    return await response.json();
+}
+
+export async function addRecord(data) {
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error(`Error adding record: ${response.status}`);
+    return await response.json();
+}
+
+export async function editRecord(id, data) {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error(`Error editing record: ${response.status}`);
+    return await response.json();
+}
+
+export async function deleteRecord(id) {
+    const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    if (!response.ok) throw new Error(`Error deleting record: ${response.status}`);
+    return true;
+}
