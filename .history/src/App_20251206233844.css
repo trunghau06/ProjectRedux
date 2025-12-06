@@ -61,7 +61,7 @@ body {
 .cards-content {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 20px;
     right: 0;
     width: auto;
     min-width: 100%;
