@@ -65,7 +65,7 @@
     .pagination-mobile {
         position: fixed !important;
         width: 90%;
-        bottom: 5px;
+        bottom: 20p;
         left: 50%;
         transform: translateX(-50%);
         gap: 10px !important;
