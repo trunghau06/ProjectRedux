@@ -1,6 +1,6 @@
 import BtnEdit   from './BtnEdit.jsx';
 import BtnDelete from './BtnDelete.jsx';
-import "../../styles/ActionButtons/EditdeleteFrame.css"; 
+import "../"; 
 
 export default function EditDeleteFrame({ userId, userData }) {
   return (
