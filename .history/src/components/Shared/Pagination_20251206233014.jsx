@@ -39,13 +39,13 @@ export default function Pagination({
       <button
         className="pagination-btn"
         onClick  ={handlePrev}
-        disabled ={currentPage <= 1 || loading}
+        disabled={currentPage <= 1 || loading}
       >
         ← Prev
       </button>
 
       <div className="pagination-info">
-        <div style  ={{ fontWeight: "bold", fontSize: "18px" }}>
+        <div style={{ fontWeight: "bold", fontSize: "18px" }}>
           Trang {currentPage}
         </div>
         <div style={{ fontSize: "14px", color: "#389e0d", marginTop: "3px", fontWeight: "bold" }}>

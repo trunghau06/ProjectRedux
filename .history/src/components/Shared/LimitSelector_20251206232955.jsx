@@ -14,9 +14,9 @@ export default function LimitSelector({ limit, onLimitChange, loading }) {
       </label>
       <select
         id="limitSelect"
-        value    ={limit}
-        onChange ={handleChange}
-        disabled ={loading}
+        value   ={limit}
+        onChange={handleChange}
+        disabled={loading}
         className="limit-selector-select"
       >
         <option value={10}>10</option>

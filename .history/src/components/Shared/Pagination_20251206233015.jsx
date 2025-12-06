@@ -45,7 +45,7 @@ export default function Pagination({
       </button>
 
       <div className="pagination-info">
-        <div style  ={{ fontWeight: "bold", fontSize: "18px" }}>
+        <div style={{ fontWeight: "bold", fontSize: "18px" }}>
           Trang {currentPage}
         </div>
         <div style={{ fontSize: "14px", color: "#389e0d", marginTop: "3px", fontWeight: "bold" }}>

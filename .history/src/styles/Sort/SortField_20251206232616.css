@@ -35,23 +35,7 @@
     z-index: 1000;
 }
 
-.sort-menu-icon {
-    cursor: pointer;
-    margin-left: 5px;
-    font-size: 12px;
-    user-select: none;
-    opacity: 0.7;
-}
 
-.sort-dropdown-header:hover .sort-menu-icon {
-    opacity: 1;
-}
-
-.sort-icon {
-    margin-left: 6px;
-    font-size: 12px;
-    opacity: 0.8;
-}
 
 .sort-menu-dropdown div {
     padding: 5px 10px;

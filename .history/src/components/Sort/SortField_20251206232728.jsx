@@ -5,10 +5,10 @@ import { setSort }   from '../../features/users/usersSlice.js';
 import "../../styles/Sort/SortField.css";
 
 export default function SortField({ label, sortKey }) {
-    const dispatch      = useDispatch();
+    const dispatch    = useDispatch();
     const currentSortBy = useSelector(state => state.users.sortBy); // sort field 
-    const currentOrder  = useSelector(state => state.users.order);   // asc/ desc
-    const currentLimit  = useSelector(state => state.users.limit);   // số limit rc
+    const currentOrder = useSelector(state => state.users.order);   // asc/ desc
+    const currentLimit = useSelector(state => state.users.limit);   // số limit rc
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const headerRef = useRef(null);

@@ -5,10 +5,10 @@ import { setSort }   from '../../features/users/usersSlice.js';
 import "../../styles/Sort/SortField.css";
 
 export default function SortField({ label, sortKey }) {
-    const dispatch      = useDispatch();
+    const dispatch  = useDispatch();
     const currentSortBy = useSelector(state => state.users.sortBy); // sort field 
-    const currentOrder  = useSelector(state => state.users.order);   // asc/ desc
-    const currentLimit  = useSelector(state => state.users.limit);   // số limit rc
+    const currentOrder = useSelector(state => state.users.order);   // asc/ desc
+    const currentLimit = useSelector(state => state.users.limit);   // số limit rc
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const headerRef = useRef(null);
@@ -44,17 +44,7 @@ export default function SortField({ label, sortKey }) {
         <th className="sort-dropdown-header" ref={headerRef}>
             <div className="header-content-wrapper">
                 <span>{label}</span>
-                <span className="sort-menu-icon" onClick={handleMenuToggle}>
-                    {isCurrentSortKey ? (
-                        currentOrder === "asc" ? (
-                            <i className="fa-solid fa-arrow-up sort-icon"></i>
-                        ) : (
-                            <i className="fa-solid fa-arrow-down sort-icon"></i>
-                        )
-                    ) : (
-                        <i className="fa-solid fa-arrow-down-wide-short sort-icon"></i>
-                    )}
-                </span>
+                <span className="sort-menu-icon" onClick={handleMenuToggle}>▼</span>
             </div>
 
             {isMenuOpen && (

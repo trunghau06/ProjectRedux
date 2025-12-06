@@ -1,4 +1,4 @@
-import React       from 'react';
+import React        from 'react';
 import RetryButton from '../ActionButtons/RetryButton';
 import '../../styles/Error/ErrorInline.css';
 
